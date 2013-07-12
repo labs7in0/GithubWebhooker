@@ -1,27 +1,28 @@
 Kinoware-Github-Autopuller
 ========
 
-This is a Python(web.py) project from Kinosang's Labs.
+這是由Kinosang's Labs開發的Python（Web.py）項目
 
-It can help you to auto deploy your codes on your Server when you commit changes to your Github Repository.
+本項目可以在您更新Github Repository時對您的程式進行自動部署
 
-First, you should install web.py on your Server.
-  * Please refer to http://webpy.org/install for more information.
+首先，您需要安裝web.py函式庫
+  * 請移步 http://webpy.org/install 獲取更多信息
 
-Second, upload autopuller.py to your Server, and edit it.
-  * Replace this line with your own code:
+然後，上載本程式到您的伺服器并修改
+  * 找到下面這行
   * command = 'cd /Development/project1 && git pull git@github.com:username/repository'
   * 
-  * /Development/project1 is the directory which you cloned from a Github repository
-  * git@github.com:username/repository is the SSH clone URL of that repository
+  * 其中：
+  *   /Development/project1 是您已經檢出的Github Repository
+  *   git@github.com:username/repository 是該Repository的SSH clone URL位址
 
-Third, run the Python Script.
-  * You can type "python autopuller.py 9888" and press Enter to run the service on TCP 9888 Port
+接著，執行本程式
+  * 你可以通過在終端機中鍵入 "python autopuller.py 9888" 并敲擊歸位鍵讓本程式運行在TCP 9888連接埠上
 
-Fourth, setup webhook on Github
-  * 1. Click "Setting" on the right of a repository page
-  * 2. Click "Service Hooks"
-  * 3. Click "WebHook URL" and input Yourdomain:9888/webhook
-  * 4. Update settings
+最後，設置Github Webhook
+  * 1. 按一下Response頁面右側的"Setting"
+  * 2. 按一下"Service Hooks"
+  * 3. 按一下"WebHook URL" 并鍵入 Yourdomain:9888/webhook
+  * 4. 按一下"Update settings"
 
-For more information, please visit http://www.kinosang.ws
+更多訊息請移步 http://www.kinosang.ws
