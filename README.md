@@ -1,5 +1,4 @@
 Kinoware-Github-Autopuller
-
 ========
 
 This is a Python(web.py) project from Kinosang's Labs.
