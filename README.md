@@ -15,6 +15,8 @@ Kinoware-Github-Autopuller
   * 其中：
   *   /Development/project1 是您已經檢出的Github Repository
   *   git@github.com:username/repository 是該Repository的SSH clone URL位址
+  *========
+  *找到if value[u'ref'] == u'refs/heads/dev'，将將dev修改為您希望自動部署的branch
 
 接著，執行本程式
   * 你可以通過在終端機中鍵入 "python autopuller.py 9888" 并敲擊歸位鍵讓本程式運行在TCP 9888連接埠上
