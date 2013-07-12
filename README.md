@@ -1,4 +1,4 @@
 Kinosang
 ========
 
-This is a test for Kinoware Github Autopuller
+Here are all the projects of Kinosang's Labs
