@@ -3,7 +3,8 @@ import json, time, os
 import threading
 
 def worker(submittime, committer): 
-    tmp = os.popen('cd /Development/project1 && git pull git@github.com:username/repositories').readlines()
+    command = 'cd /Development/project1 && git pull git@github.com:username/repositories'
+    tmp = os.popen(command).readlines()
     output = open('autopull.log', 'a')
     output.write(time.strftime("[%Y-%m-%d %H:%M:%S]\n",time.localtime(time.time())))
     output.write("* Git returned: \n")
