@@ -26,4 +26,6 @@ Kinoware-Github-Autopuller
   * 3. 按一下"WebHook URL" 并鍵入 Yourdomain:9888/webhook
   * 4. 按一下"Update settings"
 
+本項目使用 GNU通用公共授權條款 （GPL）V3.0 進行許可，許可內容詳見license.md
+
 更多訊息請移步 http://www.kinosang.ws
