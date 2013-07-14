@@ -8,6 +8,7 @@ def worker(submittime, committer):
     output = open('./autopuller.log', 'a')
     output.write(time.strftime("\n[%Y-%m-%d %H:%M:%S]\n",time.localtime(time.time())))
     output.write("* Git returned: \n")
+    tmp = [line+'\n' for line in tmp]
     output.writelines(tmp)
     output.write("- Submitted by " + committer + " at " + submittime + "\n")
     output.close()
@@ -36,12 +37,15 @@ class service:
             output = open('./autopuller.log', 'a')
             output.write("\n" + nowthetime + "\n")
             output.write("* Added: \n")
-            output.writelines(value[u'head_commit'][u'added'])
-            output.write("\n* Modified: \n")
-            output.writelines(value[u'head_commit'][u'modified'])
-            output.write("\n* Removed: \n")
-            output.writelines(value[u'head_commit'][u'removed'])
-            output.write("\n- Committer " + value[u'head_commit'][u'committer'][u'email'] + "\n")
+            sample_list = [line+'\n' for line in value[u'head_commit'][u'added']]
+            output.wirtelines(sample_list)
+            output.write("* Modified: \n")
+            sample_list = [line+'\n' for line in value[u'head_commit'][u'modified']]
+            output.wirtelines(sample_list)
+            output.write("* Removed: \n")
+            sample_list = [line+'\n' for line in value[u'head_commit'][u'removed']]
+            output.wirtelines(sample_list)
+            output.write("- Committer " + value[u'head_commit'][u'committer'][u'email'] + "\n")
             output.close()
             th = threading.Thread(target=worker,args=(nowthetime, value[u'head_commit'][u'committer'][u'email']))
             th.start()
