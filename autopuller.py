@@ -10,9 +10,9 @@ def worker(repo, submittime, committer):
     output.write(time.strftime("\n[%Y-%m-%d %H:%M:%S]\n",time.localtime(time.time())))
     output.write("* Git returned: \n")
     output.writelines(tmp)
-    output.write("Repo: " + repo)
-    output.write("\nref: " + refSet[repo])
-    output.write("\nDir: " + repoList[repo])
+    output.write("* Repo: " + repo)
+    output.write("\n* ref: " + refSet[repo])
+    output.write("\n* Dir: " + repoList[repo])
     output.write("\n- Submitted by " + committer + " at " + submittime + "\n")
     output.close()
 
