@@ -1,15 +1,19 @@
 import web
 import json, time, os
 import threading
+from apconfig import *
 
-def worker(submittime, committer): 
-    command = 'cd ~/Development/project1 && git pull'
+def worker(repo, submittime, committer): 
+    command = 'cd ' + repoList[repo] +  ' && git pull'
     tmp = os.popen(command).readlines()
     output = open('./autopuller.log', 'a')
     output.write(time.strftime("\n[%Y-%m-%d %H:%M:%S]\n",time.localtime(time.time())))
     output.write("* Git returned: \n")
     output.writelines(tmp)
-    output.write("- Submitted by " + committer + " at " + submittime + "\n")
+    output.write("Repo: " + repo)
+    output.write("\nref: " + refSet[repo])
+    output.write("\nDir: " + repoList[repo])
+    output.write("\n- Submitted by " + committer + " at " + submittime + "\n")
     output.close()
 
 class index:
@@ -31,11 +35,12 @@ class service:
         nowthetime = time.strftime("[%Y-%m-%d %H:%M:%S]",time.localtime(time.time()))
         para = web.input()
         value = json.loads(para.payload)
-        #if value[u'ref'] == u'refs/heads/master':
-        if value[u'ref'] == u'refs/heads/dev':
+        repoName = value[u'repository'][u'name']
+        if value[u'ref'] == refSet[repoName]:
             output = open('./autopuller.log', 'a')
             output.write("\n" + nowthetime + "\n")
-            output.write("* Added: \n")
+            output.write("Repo: " + repoName)
+            output.write("\n* Added: \n")
             output.writelines(value[u'head_commit'][u'added'])
             output.write("\n* Modified: \n")
             output.writelines(value[u'head_commit'][u'modified'])
@@ -43,7 +48,7 @@ class service:
             output.writelines(value[u'head_commit'][u'removed'])
             output.write("\n- Committer " + value[u'head_commit'][u'committer'][u'email'] + "\n")
             output.close()
-            th = threading.Thread(target=worker,args=(nowthetime, value[u'head_commit'][u'committer'][u'email']))
+            th = threading.Thread(target=worker,args=(repoName, nowthetime, value[u'head_commit'][u'committer'][u'email']))
             th.start()
             return "Succeed"
         return "Parameter Wrong"

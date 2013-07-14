@@ -9,16 +9,25 @@ Kinoware-Github-Autopuller
   * 請移步 http://webpy.org/install 獲取更多信息
 
 然後，上載本程式到您的伺服器并修改
-  * 找到下面這行
-  * command = 'cd ~/Development/project1 && git pull'
-  * 將~/Development/project1 修改爲您已經檢出的Github Repository
+  * 請修改apconfig.py
+  * 其中repoList是已經檢出的Repository所對應本地檔案夾的字典，格式如下：
+    repoList = {
+        'Repository名字1' : '本地檔案夾1',
+        'Repository名字2' : '本地檔案夾2'
+    }
   * 
-  * 找到if value[u'ref'] == u'refs/heads/dev'，將dev修改為您希望自動部署的branch
+  * refSet用於設定希望自動部署的Branch，格式如下：
+    refSet = {
+        'Repository名字1' : u'refs/heads/Branch名字',
+        'Repository名字2' : u'refs/heads/Branch名字'
+    }
+  * 
+  * 請務必確保兩個字典鍵的數目相同！
 
 接著，執行本程式
   * 你可以通過在終端機中鍵入 "python autopuller.py 9888" 并敲擊歸位鍵讓本程式運行在TCP 9888連接埠上
 
-最後，設置Github Webhook
+最後，設定Github Webhook
   * 1. 按一下Response頁面右側的"Setting"
   * 2. 按一下"Service Hooks"
   * 3. 按一下"WebHook URL" 并鍵入 Yourdomain:9888/webhook
