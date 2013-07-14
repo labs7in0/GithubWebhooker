@@ -1,16 +1,18 @@
 import web
 import json, time, os
 import threading
+from apconfig import *
 
-def worker(submittime, committer): 
-    command = 'cd ~/Development/project1 && git pull'
+def worker(repo, submittime, committer): 
+    command = 'cd ' + repoList[repo] +  ' && git pull'
     tmp = os.popen(command).readlines()
     output = open('./autopuller.log', 'a')
     output.write(time.strftime("\n[%Y-%m-%d %H:%M:%S]\n",time.localtime(time.time())))
     output.write("* Git returned: \n")
-    tmp = [line+'\n' for line in tmp]
     output.writelines(tmp)
-    output.write("- Submitted by " + committer + " at " + submittime + "\n")
+    output.write("Repo: " + repo)
+    output.write("\nDir: " + repoList[repo])
+    output.write("\n- Submitted by " + committer + " at " + submittime + "\n")
     output.close()
 
 class index:
@@ -36,18 +38,16 @@ class service:
         if value[u'ref'] == u'refs/heads/dev':
             output = open('./autopuller.log', 'a')
             output.write("\n" + nowthetime + "\n")
-            output.write("* Added: \n")
-            sample_list = [line+'\n' for line in value[u'head_commit'][u'added']]
-            output.wirtelines(sample_list)
-            output.write("* Modified: \n")
-            sample_list = [line+'\n' for line in value[u'head_commit'][u'modified']]
-            output.wirtelines(sample_list)
-            output.write("* Removed: \n")
-            sample_list = [line+'\n' for line in value[u'head_commit'][u'removed']]
-            output.wirtelines(sample_list)
-            output.write("- Committer " + value[u'head_commit'][u'committer'][u'email'] + "\n")
+            output.write("Repo: " + value[u'repository'][u'name'])
+            output.write("\n* Added: \n")
+            output.writelines(value[u'head_commit'][u'added'])
+            output.write("\n* Modified: \n")
+            output.writelines(value[u'head_commit'][u'modified'])
+            output.write("\n* Removed: \n")
+            output.writelines(value[u'head_commit'][u'removed'])
+            output.write("\n- Committer " + value[u'head_commit'][u'committer'][u'email'] + "\n")
             output.close()
-            th = threading.Thread(target=worker,args=(nowthetime, value[u'head_commit'][u'committer'][u'email']))
+            th = threading.Thread(target=worker,args=(value[u'repository'][u'name'], nowthetime, value[u'head_commit'][u'committer'][u'email']))
             th.start()
             return "Succeed"
         return "Parameter Wrong"
