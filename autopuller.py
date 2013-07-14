@@ -36,7 +36,6 @@ class service:
         para = web.input()
         value = json.loads(para.payload)
         repoName = value[u'repository'][u'name']
-        #if value[u'ref'] == u'refs/heads/master':
         if value[u'ref'] == refSet[repoName]:
             output = open('./autopuller.log', 'a')
             output.write("\n" + nowthetime + "\n")
