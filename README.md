@@ -6,9 +6,9 @@ Kinoware-Github-Autopuller
 本項目可以在您更新Github Repository時對您的程式進行自動部署
 
 Branch:
-  Stable是該項目的穩定版（通過了較長時間的檢驗）。
-  Master是該項目的一般版（通過了內部測試）。
-  Dev是該項目的開發版（可能存在極其嚴重的問題）。
+  * Stable是該項目的穩定版（通過了較長時間的檢驗）。
+  * Master是該項目的一般版（通過了內部測試）。
+  * Dev是該項目的開發版（可能存在極其嚴重的問題）。
   
   △請務必不要將Branch-Dev應用於實際生產環境，否則後果自負！
 
