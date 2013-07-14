@@ -3,10 +3,10 @@ import json, time, os
 import threading
 
 def worker(submittime, committer): 
-    command = 'cd /home/chinvo/Development/Test-for-Autopuller && git pull'
+    command = 'cd ~/Development/project1 && git pull'
     tmp = os.popen(command).readlines()
-    output = open('autopull.log', 'a')
-    output.write(time.strftime("[%Y-%m-%d %H:%M:%S]\n",time.localtime(time.time())))
+    output = open('./autopuller.log', 'a')
+    output.write(time.strftime("\n[%Y-%m-%d %H:%M:%S]\n",time.localtime(time.time())))
     output.write("* Git returned: \n")
     output.writelines(tmp)
     output.write("- Submitted by " + committer + " at " + submittime + "\n")
@@ -14,7 +14,17 @@ def worker(submittime, committer):
 
 class index:
     def GET(self):
-        return "Service Running<br>Powered by Kinoware Github Autopuller."
+        return """
+Service Running
+Powered by Kinoware Github Autopuller.
+"""
+
+class showlogs:
+    def GET(self):
+        output = open('./autopuller.log', 'r')
+        tmp = output.read()
+        output.close()
+        return tmp
 
 class service:
     def POST(self):
@@ -23,8 +33,8 @@ class service:
         value = json.loads(para.payload)
         #if value[u'ref'] == u'refs/heads/master':
         if value[u'ref'] == u'refs/heads/dev':
-            output = open('autopull.log', 'a')
-            output.write(nowthetime + "\n")
+            output = open('./autopuller.log', 'a')
+            output.write("\n" + nowthetime + "\n")
             output.write("* Added: \n")
             output.writelines(value[u'head_commit'][u'added'])
             output.write("\n* Modified: \n")
@@ -40,7 +50,8 @@ class service:
 
 urls = (
   '/', 'index',
-  '/webhook', 'service'
+  '/webhook', 'service',
+  '/logs','showlogs'
 )
 
 app = web.application(urls, globals())
