@@ -11,16 +11,16 @@ Kinoware-Github-Autopuller
 然後，上載本程式到您的伺服器并修改
   * 請修改apconfig.py
   * 其中repoList是已經檢出的Repository所對應本地檔案夾的字典，格式如下：
-    repoList = {
-        'Repository名字1' : '本地檔案夾1',
-        'Repository名字2' : '本地檔案夾2'
-    }
+  * repoList = {
+  *     'Repository名字1' : '本地檔案夾1',
+  *     'Repository名字2' : '本地檔案夾2'
+  * }
   * 
   * refSet用於設定希望自動部署的Branch，格式如下：
-    refSet = {
-        'Repository名字1' : u'refs/heads/Branch名字',
-        'Repository名字2' : u'refs/heads/Branch名字'
-    }
+  * refSet = {
+  *     'Repository名字1' : u'refs/heads/Branch名字',
+  *     'Repository名字2' : u'refs/heads/Branch名字'
+  * }
   * 
   * 請務必確保兩個字典鍵的數目相同！
 
@@ -32,6 +32,8 @@ Kinoware-Github-Autopuller
   * 2. 按一下"Service Hooks"
   * 3. 按一下"WebHook URL" 并鍵入 Yourdomain:9888/webhook
   * 4. 按一下"Update settings"
+
+另外，使用 Yourdomain:9888/logs 可以快速查看伺服器日誌
 
 本項目使用 GNU通用公共授權條款 （GPL）V3.0 進行許可，許可內容詳見license.md
 
