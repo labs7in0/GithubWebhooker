@@ -4,16 +4,19 @@ import threading
 from apconfig import *
 
 def worker(repo, submittime, committer): 
-    command = 'cd ' + repoList[repo] +  ' && git pull'
-    tmp = os.popen(command).readlines()
+    tmp = os.popen('cd ' + repoList[repo][0] +  ' && git pull').readlines()
     output = open('./autopuller.log', 'a')
     output.write(time.strftime("\n[%Y-%m-%d %H:%M:%S]\n",time.localtime(time.time())))
     output.write("* Git returned: \n")
     output.writelines(tmp)
     output.write("* Repo: " + repo)
-    output.write("\n* ref: " + refSet[repo])
-    output.write("\n* Dir: " + repoList[repo])
-    output.write("\n- Submitted by " + committer + " at " + submittime + "\n")
+    output.write("\n* Branch: " + repoList[repo][1])
+    output.write("\n* Dir: " + repoList[repo][0])
+    tmp = os.popen(repoList[repo][2]).readlines()
+    output.write("\n* Custom Command: \n")
+    output.write(repoList[repo][2] + "\n* Shell Returned: \n")
+    output.writelines(tmp)
+    output.write("- Submitted by " + committer + " at " + submittime + "\n")
     output.close()
 
 class index:
@@ -36,7 +39,7 @@ class service:
         para = web.input()
         value = json.loads(para.payload)
         repoName = value[u'repository'][u'name']
-        if value[u'ref'] == refSet[repoName]:
+        if value[u'ref'] == 'refs/heads/' + repoList[repoName][1]:
             output = open('./autopuller.log', 'a')
             output.write("\n" + nowthetime + "\n")
             output.write("Repo: " + repoName)
